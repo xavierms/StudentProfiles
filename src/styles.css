@@ -1,1 +1,148 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  font-family: "Raleway", sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: #b3b3b3;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* marco centrado */
+.scroll-bg {
+  width: 60%;
+  left: 27%;
+  position: absolute;
+  transform: translate(-10%, 10%);
+  background-color: white;
+  border: 1px solid #e1e1e1;
+  border-radius: 13px;
+  overflow: hidden;
+}
+.scroll-div {
+  width: 100%;
+  height: 600px;
+  overflow-y: scroll;
+}
+/* para quitar los scrool verticales y horizontales */
+.scroll-div::-webkit-scrollbar {
+  display: none;
+}
+.scroll-object {
+  padding: 1.8%;
+}
+
+@media (max-width: 400px) {
+  .studentForm {
+    width: 90%;
+  }
+}
+.iconoPlus {
+  float: right;
+  margin: 12px;
+  color: #b3b3b3;
+  cursor: pointer;
+}
+.containerFather {
+  border-bottom: 1px solid #b3b3b3;
+  margin-bottom: 13px;
+}
+.containerSon {
+  display: flex;
+  margin-bottom: 13px;
+}
+.imagen {
+  /* display: inline; */
+}
+.textos {
+  /* display: inline; */
+  padding-left: 2%;
+}
+.cuerpo {
+  padding-left: 4%;
+}
+
+.dropdownlist {
+  max-height: 0;
+  transition: max-height .3s ease-in-out;
+  overflow: hidden;
+}
+.dropdownlist.open {
+  max-height: 100vh;
+  transition: max-height .3s ease-in ;
+}
+
+@keyframes displayAnimation {
+  from {
+    display: none;
+  }
+  to {
+    display: flex;
+  }
+}
+.dropdown-grades ul {
+  position: absolute;
+  max-height: 0px;
+  overflow: hidden;
+  transition: all 1s;
+}
+.dropdown-grades:hover ul {
+  max-height: 400px;
+}
+.small-pic {
+  border-radius: 60px;
+  border: 1px solid #e1e1e1;
+  width: 80px;
+}
+
+.form {
+  margin-bottom: 13px;
+  width: 50%;
+  height: 40px;
+  max-width: 400px;
+  position: relative;
+  overflow: hidden;
+}
+.form input {
+  width: 100%;
+  height: 30%;
+  background: none;
+  color: rgb(0, 0, 0);
+  padding-top: 25px;
+  border: none;
+  outline: 0px;
+}
+.form .lbl-nombre {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  pointer-events: none;
+  border-bottom: 1px solid #c7c7c7;
+}
+
+/* .text-nomb{
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    transition: all 0.3s ease;
+    color: rgb(0, 0, 0);
+}
+.form input:focus + .lbl-nombre .text-nomb,.form input:valid + .lbl-nombre .text-nomb{
+    transform: translateY(-150%);
+    font-size: 14px;
+    color: #000000;
+}
+.form input:focus + .lbl-nombre:after, .form input:valid + .lbl-nombre:after{
+    transform: translateX(0%); 
+} */
+@media only screen and (min-width: 320px) and (max-width: 768px) {
+  .form {
+    width: 85%;
+  }
+}

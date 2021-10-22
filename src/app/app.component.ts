@@ -14,6 +14,7 @@ export class AppComponent {
 
     this.StudentService.GetStudents().subscribe(StudentsSubs => {
 
+      //listo manin, prueba
       this.Students = StudentsSubs.students;      
     console.log(this.Students);
      });

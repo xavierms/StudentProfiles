@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { student } from '../interfaces/student';
+import { Student, student } from '../interfaces/student';
 
 
 @Injectable({
@@ -12,7 +12,7 @@ export class StudentService {
 
   constructor( private http: HttpClient ) { }
 
-GetStudents(): Observable<student[]> {
-  return this.http.get<student[]>(`${this.APIurl}`);
+GetStudents(): Observable<Student> {
+  return this.http.get<Student>(`${this.APIurl}`);
 }
 }

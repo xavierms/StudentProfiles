@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FilterPipe implements PipeTransform {
 
-  transform(value: any, arg: any): any {
+  transform(value: Array<any>, arg: string): any[] {
     const resultStudent = [];
     for(const student of value){
       if(student.firstName.toUpperCase().indexOf((arg.toUpperCase())) > -1 ){

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { Student } from './interfaces/student';
+
 import { StudentService } from './services/student.service';
+import { Student, student } from './interfaces/student';
 
 
 @Component({
@@ -10,20 +11,28 @@ import { StudentService } from './services/student.service';
 })
 export class AppComponent {
   constructor(private StudentService: StudentService) {
+
     this.StudentService.GetStudents().subscribe(StudentsSubs => {
-      this.Students = StudentsSubs;
+
+      this.Students = StudentsSubs.students;      
     console.log(this.Students);
-   
-    });
-   
+     });
   }
   
   title = 'StudentProfiles';
+  
+  Students:student[]=[];
  
-  Students: Student[] = [];
   filterStudent = '';
 
   
+//  SearchStudents(){
+//     this.StudentService.GetStudents().subscribe(StudentsSubs => {
+
+//        this.Students = StudentsSubs.students;      
+//      console.log(this.Students);
+//       });
+//   }
   clicking(e: any) {
     console.log(e);
     const { path, target } = e;
@@ -44,18 +53,13 @@ export class AppComponent {
     return dropEl.classList.remove('open');
   }
  //obtener promedio
-  StudentAverage = this.Students.map((st)=>{
-    st.avg = st.grades.reduce( (a, b) =>  Number(a) + Number(b), 0 ) / st.grades.length; 
-    return st
+  // StudentAverage = this.Students.map((st)=>{
+  //   st.avg = st.grades.reduce( (a, b) =>  Number(a) + Number(b), 0 ) / st.grades.length; 
+  //   return st
 
-  })
+  // })
 
+     
+     ngOnInit(): void {}
 
-  
-  ngOnInit(): void {
-
- 
-  }
 }
-
-

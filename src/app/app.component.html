@@ -16,7 +16,7 @@
         <div  class="row">
             <div class="col">
                 
-                <div class="containerFather" *ngFor="let Student of Students ">
+                <div class="containerFather" *ngFor="let Student of Students | filter:filterStudent ">
                     <div class= "iconoPlus">
                         <i class="fas fa-plus fa-2x" (click)="clicking( $event )"></i>
                     </div>

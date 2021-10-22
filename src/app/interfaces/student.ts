@@ -1,4 +1,5 @@
-export interface Student {
+export interface student {
+   
 city: string;
 company: string;
 email: string;
@@ -9,4 +10,7 @@ lastName: string;
 pic: string;
 skill:string;
 avg: number;
+}
+export interface Student{
+    students: student[];
 }

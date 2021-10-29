@@ -13,7 +13,7 @@
         <input
           type="text"
           name="filterTag"
-          [(ngModel)]="tags"
+          [(ngModel)]="filterTags"
           placeholder="Search by tag"
         />
       </form>
@@ -57,29 +57,30 @@
                       </div>
                     </div>
                   </div>
-                      <div class="tagsContainer" *ngFor="let tagg of tags">
-                        
-                    <div class="Tags" >
-                      {{tagg}}
-                    </div>
                   
+                  <div class="tagsContainer" *ngFor="let tagg of tags">
+
+                  <div class="Tags">
+                    {{tagg}}
                   </div>
-                   <form class="form" (ngSubmit)="addTag()" ><!--*ngIf="clearInput.value.length > 0" (keyup)="clearInput.value = ''" -->
+                  </div> 
+                  <form class="form" (ngSubmit)="addTag()" ><!--*ngIf="clearInput.value.length > 0" (keyup)="clearInput.value = ''" -->
                     <input  
                     (keyup)="0"   
                      #clearInput           
                       type="text"
                       placeholder="Add a tag"
                       name="tags"                    
-                      [(ngModel)]="nuevo"
-
+                      [(ngModel)]="nuevo"       
                     />
                   </form>
+                   
                 </div>
               </div>
             </div>
           </div>
           
+         
         </div>
       </div>
     </div>

@@ -13,7 +13,6 @@ export class AppComponent {
   Students: student[] = [];
   filterStudent = '';
   filterTags = '';
-  // clearInput ='';
   tags:string[]=[];
   nuevo:string ='';
 
@@ -33,9 +32,8 @@ export class AppComponent {
   ngOnInit(): void {}
 
   addTag(){
-    // this.Students.forEach(element => {
+    //  this.Students.forEach(element => {
     //no permite insertar si no hay valores.
-    
       if(this.nuevo.trim().length === 0){
   return;
       }

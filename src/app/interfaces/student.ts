@@ -9,7 +9,7 @@ export interface student {
   pic: string;
   skill: string;
   avg: number;
-  // tag:string[];
+  tag:string[];
 }
 export interface Student {
   students: student[];

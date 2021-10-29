@@ -1,56 +1,87 @@
-
-    <div class="scroll-bg">
-        <div class="scroll-div">
-            <div class="scroll-object">
-                <form class="form" >
-                    <input type="text" 
-                           name= "filterStudent"        
-                           [(ngModel)]="filterStudent"
-                           placeholder="Search by name"
-                    />
-                    <label class="lbl-nombre">
-                        <span class="text-nomb"></span>
-                    </label>
-                </form>
-        
-        <div  class="row">
-            <div class="col">
-                
-                <div class="containerFather" *ngFor="let Student of Students | filter:filterStudent ">
-                    <div class= "iconoPlus">
-                        <i class="fas fa-plus fa-2x" (click)="clicking( $event )"></i>
-                    </div>
-                    <div class="containerSon">
-                        <div class="imagen">
-                            <img class="small-pic" [src]="Student.pic">
-                        </div >
-                        <div class="textos">
-                            <h1><strong>   {{Student.firstName | uppercase}} {{Student.lastName | uppercase}}</strong></h1>
-                            <div class="cuerpo">
-                                <p>Email:   {{Student.email}}</p>
-                                <p>Company: {{Student.company}}</p>
-                                <p>Skill:   {{Student.skill}}</p>
-                               
-                                <p >Average:{{Student.avg}}</p>
-                                
-                                <div class="dropdownlist">
-                                    <div class="dropdownlist__item"  *ngFor="let gradesArray of Students; let i = index"  >
-                                       <div class="dropdownlist__item-text"  *ngIf="Student.grades[i] != null"> 
-                                          Test {{ i + 1 }}: {{Student.grades[i]}}
-                                          
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                    </div>
-                </div>                   
-               
-              </div>
-              
+<div class="scroll-bg">
+  <div class="scroll-div">
+    <div class="scroll-object">
+      <form class="form">
+        <input
+          type="text"
+          name="filterStudent"
+          [(ngModel)]="filterStudent"
+          placeholder="Search by name"
+        />
+      </form>
+      <form class="form">
+        <input
+          type="text"
+          name="filterTag"
+          [(ngModel)]="tags"
+          placeholder="Search by tag"
+        />
+      </form>
+      <div class="row">
+        <div class="col">
+          <div
+            class="containerFather"
+            *ngFor="let Student of Students | filter: filterStudent "
+          >
+            <div class="iconoPlus">
+              <i class="fas fa-plus fa-2x" (click)="clicking($event)"></i>
             </div>
-         </div>
-      </div>
+            <div class="containerSon">
+              <div class="imagen">
+                <img class="small-pic" [src]="Student.pic" />
+              </div>
+              <div class="textos">
+                <h1>
+                  <strong>
+                    {{ Student.firstName | uppercase }}
+                    {{ Student.lastName | uppercase }}
+                  </strong>
+                </h1>
+                <div class="cuerpo">
+                  <p>Email: {{ Student.email }}</p>
+                  <p>Company: {{ Student.company }}</p>
+                  <p>Skill: {{ Student.skill }}</p>
 
-   </div>
+                  <p>Average:{{ Student.avg }}%</p>
+
+                  <div class="dropdownlist">
+                    <div
+                      class="dropdownlist__item"
+                      *ngFor="let gradesArray of Students; let i = index"
+                    >
+                      <div
+                        class="dropdownlist__item-text"
+                        *ngIf="Student.grades[i] != null"
+                      >
+                        Test {{ i + 1 }}: {{ Student.grades[i] }}
+                      </div>
+                    </div>
+                  </div>
+                      <div class="tagsContainer" *ngFor="let tagg of tags">
+                        
+                    <div class="Tags" >
+                      {{tagg}}
+                    </div>
+                  
+                  </div>
+                   <form class="form" (ngSubmit)="addTag()" ><!--*ngIf="clearInput.value.length > 0" (keyup)="clearInput.value = ''" -->
+                    <input  
+                    (keyup)="0"   
+                     #clearInput           
+                      type="text"
+                      placeholder="Add a tag"
+                      name="tags"                    
+                      [(ngModel)]="nuevo"
+
+                    />
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

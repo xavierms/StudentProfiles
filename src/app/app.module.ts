@@ -4,29 +4,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule } from '@angular/common/http';
 
 import { FilterPipe } from './pipes/filter.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ObjToArrayPipe } from './pipes/objToArray.pipe';
-
+import { FilterTagPipe } from './pipes/filter-tag.pipe';
 
 
 @NgModule({
-  declarations: [
-   AppComponent,
-   FilterPipe,
-   ObjToArrayPipe
-  ],
+  declarations: [AppComponent, FilterPipe, FilterTagPipe],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule
-
+    BrowserAnimationsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

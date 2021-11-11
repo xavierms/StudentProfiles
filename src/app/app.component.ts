@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { StudentService } from './services/student.service';
-import { student, Student } from './interfaces/student';
+import { student } from './interfaces/student';
 
 @Component({
   selector: 'app-root',
@@ -10,51 +10,65 @@ import { student, Student } from './interfaces/student';
 })
 export class AppComponent {
   title = 'StudentProfiles';
-  Students: student[] = [];
   filterStudent = '';
   filterTags = '';
-  tags:string[]=[];
-  nuevo:string ='';
-
+  nuevo: string = '';
+  Students: student[] = [];
+  Tags: string[] = [];
+  taggs: any[] = [];
 
   constructor(private StudentService: StudentService) {
-    this.StudentService.GetStudents().subscribe(StudentsSubs => {
+    this.StudentService.GetStudents().subscribe((StudentsSubs) => {
       this.Students = StudentsSubs.students;
+
+      console.log(
+        (this.Students = StudentsSubs.students.filter((item) =>
+          item.firstName
+            .toLowerCase()
+            .includes(this.filterStudent.toLowerCase())
+        ))
+      );
+
       //obtener promedio
       this.Students.map((st) => {
         st.avg =
           st.grades.reduce((a, b) => Number(a) + Number(b), 0) /
           st.grades.length;
         return st;
-      });//
+      }); //
+      return this.Students;
     });
   }
   ngOnInit(): void {}
 
-  addTag(){
-    //  this.Students.forEach(element => {
-    //no permite insertar si no hay valores.
-      if(this.nuevo.trim().length === 0){
-  return;
-      }
-  this.tags.push(this.nuevo);
-  console.log(this.tags);
-  console.log(this.nuevo);
-      
-    // });
+  addTag() {
+    // this.Tags.push(this.nuevo);
+    this.Students.forEach((st) => {
+      st.tag.push(this.nuevo);
+    });
 
-//   }
-//   Search() {
-//     if (this.nuevo.length > 0) {
-//       this.tags = this.tags.filter(res => {
-//         return res.toLowerCase().match(this.nuevo.toLowerCase());
-//       })
-//     }
-//     else if (this.nuevo.length === 0) {
-//       this.tags = this.tags;
-//       console.log(this.tags.length);
-//     }
- }
+    console.log(this.nuevo);
+    console.log(this.Tags);
+
+    //no permite insertar si no hay valores.
+    if (this.nuevo.trim().length === 0) {
+      return;
+    }
+    // this.Students.student.tag.push(this.nuevo);
+    // console.log(this.tags);
+
+    //   }
+    //   Search() {
+    //     if (this.nuevo.length > 0) {
+    //       this.tags = this.tags.filter(res => {
+    //         return res.toLowerCase().match(this.nuevo.toLowerCase());
+    //       })
+    //     }
+    //     else if (this.nuevo.length === 0) {
+    //       this.tags = this.tags;
+    //       console.log(this.tags.length);
+    //     }
+  }
   clicking(e: any) {
     console.log(e);
     const { path, target } = e;

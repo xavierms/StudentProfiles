@@ -1,7 +1,7 @@
 <div class="scroll-bg">
   <div class="scroll-div">
     <div class="scroll-object">
-      <form class="form">
+      <form class="form" (onChange)="filterStudent">
         <input
           type="text"
           name="filterStudent"
@@ -19,10 +19,9 @@
       </form>
       <div class="row">
         <div class="col">
-          <div
-            class="containerFather"
-            *ngFor="let Student of Students | filter: filterStudent "
-          >
+          <div class="containerFather" *ngFor="let Student of Students " >
+            <!--| filter: filterStudent -->
+           
             <div class="iconoPlus">
               <i class="fas fa-plus fa-2x" (click)="clicking($event)"></i>
             </div>
@@ -34,15 +33,15 @@
                 <h1>
                   <strong>
                     {{ Student.firstName | uppercase }}
-                    {{ Student.lastName | uppercase }}
+                    {{ Student.lastName  | uppercase }}
                   </strong>
                 </h1>
                 <div class="cuerpo">
-                  <p>Email: {{ Student.email }}</p>
+                  <p>Email:   {{ Student.email }}</p>
                   <p>Company: {{ Student.company }}</p>
-                  <p>Skill: {{ Student.skill }}</p>
+                  <p>Skill:   {{ Student.skill }}</p>
 
-                  <p>Average:{{ Student.avg }}%</p>
+                  <p>Average: {{ Student.avg }}%</p>
 
                   <div class="dropdownlist">
                     <div
@@ -57,32 +56,35 @@
                       </div>
                     </div>
                   </div>
-                  
-                  <div class="tagsContainer" *ngFor="let tagg of tags">
 
-                  <div class="Tags">
-                    {{tagg}}
+                  <!-- <div class="tagsContainer" *ngFor="let StudentTags of Tags; let i = index">
+                    <div class="Tags" >
+                      {{ StudentTags }}
+                    </div>
+                  </div> -->
+                  <div class="tagsContainer" *ngFor="let StudentTags of Students; let i = index">
+                    <div class="Tags" *ngIf="clearInput.value.length > 0">
+                      {{ Student.tag }}
+                    </div>
                   </div>
-                  </div> 
-                  <form class="form" (ngSubmit)="addTag()" ><!--*ngIf="clearInput.value.length > 0" (keyup)="clearInput.value = ''" -->
-                    <input  
-                    (keyup)="0"   
-                     #clearInput           
-                      type="text"
-                      placeholder="Add a tag"
-                      name="tags"                    
-                      [(ngModel)]="nuevo"       
-                    />
-                  </form>
-                   
+
+                    <form class="form" (ngSubmit)="addTag()">
+                      <!--*ngIf="clearInput.value.length > 0" (keyup)="clearInput.value = ''" -->
+                      <input
+                        (keyup)="(0)"
+                        #clearInput
+                        type="text"
+                        placeholder="Add a tag"
+                        name="nuevo"
+                        [(ngModel)]="nuevo"
+                      />
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          
-         
         </div>
       </div>
     </div>
   </div>
-</div>

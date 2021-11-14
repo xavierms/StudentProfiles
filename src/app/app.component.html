@@ -1,7 +1,7 @@
 <div class="scroll-bg">
   <div class="scroll-div">
     <div class="scroll-object">
-      <form class="form" (onChange)="filterStudent">
+      <form class="form" (ngSubmit)="searchStudent(filterStudent)">
         <input
           type="text"
           name="filterStudent"
@@ -21,7 +21,7 @@
         <div class="col">
           <div class="containerFather" *ngFor="let Student of Students " >
             <!--| filter: filterStudent -->
-           
+           {{filterStudent}}
             <div class="iconoPlus">
               <i class="fas fa-plus fa-2x" (click)="clicking($event)"></i>
             </div>

@@ -17,18 +17,20 @@ export class AppComponent {
   Tags: string[] = [];
   taggs: any[] = [];
 
-  constructor(private StudentService: StudentService) {
+  constructor(private StudentService: StudentService) {}
+  ngOnInit(): void {
+    this.searchStudent('');
+  }
+ //search students
+  searchStudent(studentParam: string) {
     this.StudentService.GetStudents().subscribe((StudentsSubs) => {
-      this.Students = StudentsSubs.students;
-
-      console.log(
-        (this.Students = StudentsSubs.students.filter((item) =>
-          item.firstName
-            .toLowerCase()
-            .includes(this.filterStudent.toLowerCase())
-        ))
+      const { students } = StudentsSubs;
+      this.Students = students;
+      this.Students = students.filter((studentFilter) =>
+        studentFilter.firstName
+          .toLowerCase()
+          .includes(studentParam.toLowerCase())
       );
-
       //obtener promedio
       this.Students.map((st) => {
         st.avg =
@@ -39,8 +41,7 @@ export class AppComponent {
       return this.Students;
     });
   }
-  ngOnInit(): void {}
-
+ //add to tags
   addTag() {
     // this.Tags.push(this.nuevo);
     this.Students.forEach((st) => {
@@ -69,21 +70,23 @@ export class AppComponent {
     //       console.log(this.tags.length);
     //     }
   }
+  
+  //toggle the icon plus to icon minus
   clicking(e: any) {
-    console.log(e);
+    //console.log(e);
     const { path, target } = e;
-    console.log(
-      [...path[2].querySelector('.dropdownlist')?.classList].includes('open')
-    );
+    //console.log(
+      [...path[2].querySelector('.dropdownlist')?.classList].includes('open');
+    //);
 
     const dropEl = path[2].querySelector('.dropdownlist');
     //
     if (![...dropEl.classList].includes('open')) {
       //no open
-      console.log('if');
-      console.log(target.classList);
+      //console.log('if');
+      //console.log(target.classList);
       target.classList.replace('fa-plus', 'fa-minus');
-      console.log(target.classList);
+      //console.log(target.classList);
 
       return dropEl.classList.add('open');
     }

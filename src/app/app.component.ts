@@ -15,46 +15,56 @@ export class AppComponent {
   nuevo: string = '';
   Students: student[] = [];
   Tags: string[] = [];
-  taggs: any[] = [];
 
   constructor(private StudentService: StudentService) {}
   ngOnInit(): void {
-    this.searchStudent('');
+    this.searchStudent();
   }
- //search students
-  searchStudent(studentParam: string) {
+  //search students
+  searchStudent() {
+    
     this.StudentService.GetStudents().subscribe((StudentsSubs) => {
       const { students } = StudentsSubs;
-      this.Students = students;
+      console.log(
       this.Students = students.filter((studentFilter) =>
         studentFilter.firstName
           .toLowerCase()
-          .includes(studentParam.toLowerCase())
-      );
+          .includes(this.filterStudent.toLowerCase())
+      ));
       //obtener promedio
       this.Students.map((st) => {
         st.avg =
           st.grades.reduce((a, b) => Number(a) + Number(b), 0) /
           st.grades.length;
         return st;
-      }); //
-      return this.Students;
+      });
     });
   }
- //add to tags
-  addTag() {
-    // this.Tags.push(this.nuevo);
-    this.Students.forEach((st) => {
-      st.tag.push(this.nuevo);
+
+  searchTag() {
+    this.StudentService.GetStudents().subscribe((StudentsSubs) => {
+      const { students } = StudentsSubs;
+      this.Students = students.filter((studentFilter) =>
+        studentFilter.tag.includes(this.filterTags.toLowerCase())
+      );
     });
+  
+  }
+
+  //add to tags
+  addTag() {
+    if (this.nuevo.trim().length === 0) {
+      return;
+    }
+    this.Tags.push(this.nuevo.toLowerCase());
+    // this.Students.forEach((st) => {
+    //   st.tag.push(this.nuevo);
+    // });
 
     console.log(this.nuevo);
     console.log(this.Tags);
 
     //no permite insertar si no hay valores.
-    if (this.nuevo.trim().length === 0) {
-      return;
-    }
     // this.Students.student.tag.push(this.nuevo);
     // console.log(this.tags);
 
@@ -70,13 +80,13 @@ export class AppComponent {
     //       console.log(this.tags.length);
     //     }
   }
-  
+
   //toggle the icon plus to icon minus
   clicking(e: any) {
     //console.log(e);
     const { path, target } = e;
     //console.log(
-      [...path[2].querySelector('.dropdownlist')?.classList].includes('open');
+    [...path[2].querySelector('.dropdownlist')?.classList].includes('open');
     //);
 
     const dropEl = path[2].querySelector('.dropdownlist');

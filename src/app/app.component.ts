@@ -17,14 +17,17 @@ export class AppComponent {
   Tags: string[] = [];
   taggs: any[] = [];
 
-  constructor(private StudentService: StudentService) {}
+  constructor(private StudentService: StudentService) { }
   ngOnInit(): void {
     this.searchStudent('');
   }
- //search students
+  //search students
   searchStudent(studentParam: string) {
     this.StudentService.GetStudents().subscribe((StudentsSubs) => {
-      const { students } = StudentsSubs;
+      const students = StudentsSubs.students.map((item) => {
+        return { ...item, tag: [], inputTag: "" }
+      });
+
       this.Students = students;
       this.Students = students.filter((studentFilter) =>
         studentFilter.firstName
@@ -41,12 +44,17 @@ export class AppComponent {
       return this.Students;
     });
   }
- //add to tags
-  addTag() {
+  //add to tags
+  addTag(index: any) {
     // this.Tags.push(this.nuevo);
-    this.Students.forEach((st) => {
-      st.tag.push(this.nuevo);
-    });
+
+    console.log(this.Students)
+
+    this.Students[index].tag.push(this.Students[index].inputTag);
+
+    // this.Students.forEach((st) => {
+    //   st.tag.push(this.nuevo);
+    // });
 
     console.log(this.nuevo);
     console.log(this.Tags);
@@ -70,13 +78,13 @@ export class AppComponent {
     //       console.log(this.tags.length);
     //     }
   }
-  
+
   //toggle the icon plus to icon minus
   clicking(e: any) {
     //console.log(e);
     const { path, target } = e;
     //console.log(
-      [...path[2].querySelector('.dropdownlist')?.classList].includes('open');
+    [...path[2].querySelector('.dropdownlist')?.classList].includes('open');
     //);
 
     const dropEl = path[2].querySelector('.dropdownlist');

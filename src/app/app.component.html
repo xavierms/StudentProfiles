@@ -19,7 +19,7 @@
       </form>
       <div class="row">
         <div class="col">
-          <div class="containerFather" *ngFor="let Student of Students " >
+          <div class="containerFather" *ngFor="let Student of Students; let ix = index" >
             <!--| filter: filterStudent -->
            {{filterStudent}}
             <div class="iconoPlus">
@@ -57,18 +57,25 @@
                     </div>
                   </div>
 
+                  
+                  <div class="tagsContainer" *ngFor="let StudentTags of Student.tag; let i = index">
+                    <div class="Tags" >
+                      {{ StudentTags }}
+                    </div>
+                  </div> 
+
                   <!-- <div class="tagsContainer" *ngFor="let StudentTags of Tags; let i = index">
                     <div class="Tags" >
                       {{ StudentTags }}
                     </div>
                   </div> -->
-                  <div class="tagsContainer" *ngFor="let StudentTags of Students; let i = index">
+                  <!-- <div class="tagsContainer" *ngFor="let StudentTags of Students; let i = index">
                     <div class="Tags" *ngIf="clearInput.value.length > 0">
                       {{ Student.tag }}
                     </div>
-                  </div>
+                  </div> -->
 
-                    <form class="form" (ngSubmit)="addTag()">
+                    <form class="form" (ngSubmit)="addTag(ix)">
                       <!--*ngIf="clearInput.value.length > 0" (keyup)="clearInput.value = ''" -->
                       <input
                         (keyup)="(0)"
@@ -76,7 +83,7 @@
                         type="text"
                         placeholder="Add a tag"
                         name="nuevo"
-                        [(ngModel)]="nuevo"
+                        [(ngModel)]="Student.inputTag"
                       />
                     </form>
                   </div>

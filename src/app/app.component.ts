@@ -52,6 +52,7 @@ export class AppComponent {
 
     this.Students[index].tag.push(this.Students[index].inputTag);
 
+
     // this.Students.forEach((st) => {
     //   st.tag.push(this.nuevo);
     // });

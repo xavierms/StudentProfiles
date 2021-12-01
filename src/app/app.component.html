@@ -1,7 +1,7 @@
 <div class="scroll-bg">
   <div class="scroll-div">
     <div class="scroll-object">
-      <form class="form" (ngSubmit)="searchStudent(filterStudent)">
+      <form class="form" (ngSubmit)="searchStudent()">
         <input
           type="text"
           name="filterStudent"
@@ -9,7 +9,7 @@
           placeholder="Search by name"
         />
       </form>
-      <form class="form">
+      <form class="form" (ngSubmit)="searchTag()">
         <input
           type="text"
           name="filterTag"
@@ -21,7 +21,7 @@
         <div class="col">
           <div class="containerFather" *ngFor="let Student of Students; let ix = index" >
             <!--| filter: filterStudent -->
-           {{filterStudent}}
+
             <div class="iconoPlus">
               <i class="fas fa-plus fa-2x" (click)="clicking($event)"></i>
             </div>
@@ -32,14 +32,15 @@
               <div class="textos">
                 <h1>
                   <strong>
+                    {{ filterStudent }}
                     {{ Student.firstName | uppercase }}
-                    {{ Student.lastName  | uppercase }}
+                    {{ Student.lastName | uppercase }}
                   </strong>
                 </h1>
                 <div class="cuerpo">
-                  <p>Email:   {{ Student.email }}</p>
+                  <p>Email: {{ Student.email }}</p>
                   <p>Company: {{ Student.company }}</p>
-                  <p>Skill:   {{ Student.skill }}</p>
+                  <p>Skill: {{ Student.skill }}</p>
 
                   <p>Average: {{ Student.avg }}%</p>
 
@@ -96,3 +97,4 @@
       </div>
     </div>
   </div>
+</div>

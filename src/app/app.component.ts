@@ -15,44 +15,52 @@ export class AppComponent {
   nuevo: string = '';
   Students: student[] = [];
   Tags: string[] = [];
-  taggs: any[] = [];
 
   constructor(private StudentService: StudentService) { }
   ngOnInit(): void {
-    this.searchStudent('');
+    this.searchStudent();
   }
   //search students
-  searchStudent(studentParam: string) {
-    this.StudentService.GetStudents().subscribe((StudentsSubs) => {
-      const students = StudentsSubs.students.map((item) => {
-        return { ...item, tag: [], inputTag: "" }
-      });
+  searchStudent() {
 
-      this.Students = students;
-      this.Students = students.filter((studentFilter) =>
-        studentFilter.firstName
-          .toLowerCase()
-          .includes(studentParam.toLowerCase())
-      );
+    this.StudentService.GetStudents().subscribe((StudentsSubs) => {
+      const { students } = StudentsSubs;
+      console.log(
+        this.Students = students.filter((studentFilter) =>
+          studentFilter.firstName
+            .toLowerCase()
+            .includes(this.filterStudent.toLowerCase())
+        ));
       //obtener promedio
       this.Students.map((st) => {
         st.avg =
           st.grades.reduce((a, b) => Number(a) + Number(b), 0) /
           st.grades.length;
         return st;
-      }); //
-      return this.Students;
+      });
     });
   }
+
+
+  searchTag() {
+    this.StudentService.GetStudents().subscribe((StudentsSubs) => {
+      const { students } = StudentsSubs;
+      this.Students = students.filter((studentFilter) =>
+        studentFilter.tag.includes(this.filterTags.toLowerCase())
+      );
+    });
+
+  }
+
   //add to tags
   addTag(index: any) {
-    // this.Tags.push(this.nuevo);
+    if (this.nuevo.trim().length === 0) {
+      return;
+    }
 
     console.log(this.Students)
 
     this.Students[index].tag.push(this.Students[index].inputTag);
-
-
     // this.Students.forEach((st) => {
     //   st.tag.push(this.nuevo);
     // });
@@ -61,9 +69,6 @@ export class AppComponent {
     console.log(this.Tags);
 
     //no permite insertar si no hay valores.
-    if (this.nuevo.trim().length === 0) {
-      return;
-    }
     // this.Students.student.tag.push(this.nuevo);
     // console.log(this.tags);
 

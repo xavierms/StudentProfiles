@@ -2,10 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import { StudentService } from './services/student.service';
 import { student, Student } from './interfaces/student';
-import { Subject } from 'rxjs';
-import { debounceTime } from "rxjs/operators";
-import { TemplateBindingParseResult } from '@angular/compiler';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,18 +12,18 @@ export class AppComponent implements OnInit {
   title = 'StudentProfiles';
   filterStudent  : string = '';
   filterTags     : string = '';
-  nuevo          : string = '';
-  Tags           : string[] = [];
+
+
   Students       : student[] = [];
+
+
   studentFiltered: string[]=[]
   numberprueba?: number;
 push: any;
 
-  constructor(private StudentService: StudentService) {}
-  debouncer: Subject<string> = new Subject();
+  constructor(private StudentService: StudentService,
+    private FormBuilder: FormBuilder) {}
  
-
-   onDebounce:EventEmitter<string> = new EventEmitter();
   hayError   : boolean  = false;
 
   ngOnInit(): void {
@@ -37,32 +34,53 @@ push: any;
     //   this.onDebounce.emit(valor)
       
     // });
-    this.searchStudent();
+    console.log("NG on init")
+    this.getStudent();
+    
   }
  
-
+  formAddTags = this.FormBuilder.group({
+    tag: ['', [Validators.required]],
+  });
+  formSearchTags = this.FormBuilder.group({
+    tagsName: ['', [Validators.required]],
+  });
+  formSearchStudents = this.FormBuilder.group({
+    studentsName: ['', [Validators.required]],
+  });
   //search students
-  searchStudent() {
-    this.StudentService.GetStudents().subscribe((StudentsSubs) => {
-      const { students } = StudentsSubs;
-      console.log(
-        (this.Students = students.filter((studentFilter) =>
-          studentFilter.firstName
-            .toLowerCase()
-            .includes(this.filterStudent.toLowerCase())
-            
-        ))
-      );
-      //obtener promedio
+  getStudent() {
+    this.StudentService.GetStudents().subscribe((Students) => {
+      const { students } = Students;
+      students.forEach(student =>{
+        student.tag =[];
+      })
+
+      this.Students = students
+      console.log(this.Students)
+      this.getAverage();
+     
+      
+    });
+  }
+  searchStudents(){
+    this.StudentService.GetStudents().subscribe((Students)=>{
+      const { students } = Students;
+      students.filter((studentFilter) =>
+      studentFilter.firstName
+        .toLowerCase()
+        .includes(this.filterStudent.toLowerCase()));
+    })
+  }
+  getAverage(){
+    //obtener promedio
       this.Students.map((st) => {
         st.avg =
           st.grades.reduce((a, b) => Number(a) + Number(b), 0) /
           st.grades.length;
         return st;
       });
-    });
   }
-
   searchTag() {
     this.StudentService.GetStudents().subscribe((StudentsSubs) => {
       const { students } = StudentsSubs;
@@ -73,21 +91,16 @@ push: any;
   }
 
   //add to tags
-  addTag(index: any) {
+  addTag(studentIndex: string) {
    //debugger
     //no permite insertar si no hay valores.
-    // if (this.nuevo.trim().length === 0) {
-    //   return;
-//     }
-
-
-
-  this.Students[index].tag.push(this.Students[index].inputTag);
-
-
-    
-console.log(this.nuevo);
-
+    if (this.formAddTags.controls.tag.value.trim().length === 0 ||  this.Students[Number( studentIndex) -1].tag.indexOf(this.formAddTags.controls.tag.value ) !== -1 ) {
+      return;
+    }
+  console.log(this.Students[Number( studentIndex) -1] );
+  this.Students[Number( studentIndex) -1].tag.push(this.formAddTags.controls.tag.value);
+  console.log(this.Students[Number( studentIndex) -1] );
+  
 
   }
 

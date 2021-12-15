@@ -1,36 +1,58 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import { StudentService } from './services/student.service';
-import { student } from './interfaces/student';
+import { student, Student } from './interfaces/student';
+import { Subject } from 'rxjs';
+import { debounceTime } from "rxjs/operators";
+import { TemplateBindingParseResult } from '@angular/compiler';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'StudentProfiles';
-  filterStudent = '';
-  filterTags = '';
-  nuevo: string = '';
-  Students: student[] = [];
-  Tags: string[] = [];
+  filterStudent  : string = '';
+  filterTags     : string = '';
+  nuevo          : string = '';
+  Tags           : string[] = [];
+  Students       : student[] = [];
+  studentFiltered: string[]=[]
+  numberprueba?: number;
+push: any;
 
-  constructor(private StudentService: StudentService) { }
+  constructor(private StudentService: StudentService) {}
+  debouncer: Subject<string> = new Subject();
+ 
+
+   onDebounce:EventEmitter<string> = new EventEmitter();
+  hayError   : boolean  = false;
+
   ngOnInit(): void {
+    // this.Students
+    // .pipe(debounceTime(300))
+    // .subscribe( valor => {
+    //   console.log('Debouncer:',valor);
+    //   this.onDebounce.emit(valor)
+      
+    // });
     this.searchStudent();
   }
+ 
+
   //search students
   searchStudent() {
-
     this.StudentService.GetStudents().subscribe((StudentsSubs) => {
       const { students } = StudentsSubs;
       console.log(
-        this.Students = students.filter((studentFilter) =>
+        (this.Students = students.filter((studentFilter) =>
           studentFilter.firstName
             .toLowerCase()
             .includes(this.filterStudent.toLowerCase())
-        ));
+            
+        ))
+      );
       //obtener promedio
       this.Students.map((st) => {
         st.avg =
@@ -41,7 +63,6 @@ export class AppComponent {
     });
   }
 
-
   searchTag() {
     this.StudentService.GetStudents().subscribe((StudentsSubs) => {
       const { students } = StudentsSubs;
@@ -49,40 +70,25 @@ export class AppComponent {
         studentFilter.tag.includes(this.filterTags.toLowerCase())
       );
     });
-
   }
 
   //add to tags
   addTag(index: any) {
-    if (this.nuevo.trim().length === 0) {
-      return;
-    }
-
-    console.log(this.Students)
-
-    this.Students[index].tag.push(this.Students[index].inputTag);
-    // this.Students.forEach((st) => {
-    //   st.tag.push(this.nuevo);
-    // });
-
-    console.log(this.nuevo);
-    console.log(this.Tags);
-
+   //debugger
     //no permite insertar si no hay valores.
-    // this.Students.student.tag.push(this.nuevo);
-    // console.log(this.tags);
+    // if (this.nuevo.trim().length === 0) {
+    //   return;
+//     }
 
-    //   }
-    //   Search() {
-    //     if (this.nuevo.length > 0) {
-    //       this.tags = this.tags.filter(res => {
-    //         return res.toLowerCase().match(this.nuevo.toLowerCase());
-    //       })
-    //     }
-    //     else if (this.nuevo.length === 0) {
-    //       this.tags = this.tags;
-    //       console.log(this.tags.length);
-    //     }
+
+
+  this.Students[index].tag.push(this.Students[index].inputTag);
+
+
+    
+console.log(this.nuevo);
+
+
   }
 
   //toggle the icon plus to icon minus

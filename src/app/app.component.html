@@ -1,22 +1,28 @@
 <div class="scroll-bg">
   <div class="scroll-div">
     <div class="scroll-object">
-      <form class="form" (ngSubmit)="searchStudent()">
+      <form class="form" (ngSubmit)="searchStudent()" autocomplete="off">
         <input
           type="text"
           name="filterStudent"
           [(ngModel)]="filterStudent"
+          
+
           placeholder="Search by name"
         />
       </form>
       <form class="form" (ngSubmit)="searchTag()">
         <input
           type="text"
-          name="filterTag"
+          name="filterTags"
           [(ngModel)]="filterTags"
           placeholder="Search by tag"
         />
       </form>
+      <div *ngIf = "hayError" 
+    class="alert alert-danger">
+    No se encontró nada con el termino: {{filterStudent}} 
+</div>
       <div class="row">
         <div class="col">
           <div class="containerFather" *ngFor="let Student of Students; let ix = index" >
@@ -32,7 +38,7 @@
               <div class="textos">
                 <h1>
                   <strong>
-                    {{ filterStudent }}
+                    
                     {{ Student.firstName | uppercase }}
                     {{ Student.lastName | uppercase }}
                   </strong>
@@ -65,18 +71,8 @@
                     </div>
                   </div> 
 
-                  <!-- <div class="tagsContainer" *ngFor="let StudentTags of Tags; let i = index">
-                    <div class="Tags" >
-                      {{ StudentTags }}
-                    </div>
-                  </div> -->
-                  <!-- <div class="tagsContainer" *ngFor="let StudentTags of Students; let i = index">
-                    <div class="Tags" *ngIf="clearInput.value.length > 0">
-                      {{ Student.tag }}
-                    </div>
-                  </div> -->
 
-                    <form class="form" (ngSubmit)="addTag(ix)">
+                    <form class="form" (ngSubmit)="addTag(Student.inputTag)">
                       <!--*ngIf="clearInput.value.length > 0" (keyup)="clearInput.value = ''" -->
                       <input
                         (keyup)="(0)"
@@ -97,4 +93,4 @@
       </div>
     </div>
   </div>
-</div>
+

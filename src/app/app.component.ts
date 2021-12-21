@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import { StudentService } from './services/student.service';
-import { student, Student } from './interfaces/student';
+import { student} from './interfaces/student';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-root',
@@ -12,14 +12,8 @@ export class AppComponent implements OnInit {
   title = 'StudentProfiles';
   filterStudent  : string = '';
   filterTags     : string = '';
-
-
   Students       : student[] = [];
 
-
-  studentFiltered: string[]=[]
-  numberprueba?: number;
-push: any;
 
   constructor(private StudentService: StudentService,
     private FormBuilder: FormBuilder) {}
@@ -34,7 +28,6 @@ push: any;
     //   this.onDebounce.emit(valor)
       
     // });
-    console.log("NG on init")
     this.getStudent();
     
   }
@@ -46,14 +39,14 @@ push: any;
     tagsName: ['', [Validators.required]],
   });
   formSearchStudents = this.FormBuilder.group({
-    studentsName: ['', [Validators.required]],
+    firstName: ['', [Validators.required]],
   });
   //search students
   getStudent() {
     this.StudentService.GetStudents().subscribe((Students) => {
       const { students } = Students;
       students.forEach(student =>{
-        student.tag =[];
+        student.tag =[]; 
       })
 
       this.Students = students
@@ -66,10 +59,10 @@ push: any;
   searchStudents(){
     this.StudentService.GetStudents().subscribe((Students)=>{
       const { students } = Students;
-      students.filter((studentFilter) =>
-      studentFilter.firstName
-        .toLowerCase()
-        .includes(this.filterStudent.toLowerCase()));
+      console.log(students);
+      
+      console.log(
+       this.Students = this.formSearchStudents.controls.firstName.value.toLowerCase());
     })
   }
   getAverage(){
@@ -81,14 +74,14 @@ push: any;
         return st;
       });
   }
-  searchTag() {
-    this.StudentService.GetStudents().subscribe((StudentsSubs) => {
-      const { students } = StudentsSubs;
-      this.Students = students.filter((studentFilter) =>
-        studentFilter.tag.includes(this.filterTags.toLowerCase())
-      );
-    });
-  }
+  // searchTag() {
+  //   this.StudentService.GetStudents().subscribe((StudentsSubs) => {
+  //     const { students } = StudentsSubs;
+  //     this.Students = students.filter((studentFilter) =>
+  //       studentFilter.tag.includes(this.filterTags.toLowerCase())
+  //     );
+  //   });
+  // }
 
   //add to tags
   addTag(studentIndex: string) {
@@ -97,9 +90,9 @@ push: any;
     if (this.formAddTags.controls.tag.value.trim().length === 0 ||  this.Students[Number( studentIndex) -1].tag.indexOf(this.formAddTags.controls.tag.value ) !== -1 ) {
       return;
     }
-  console.log(this.Students[Number( studentIndex) -1] );
+  
   this.Students[Number( studentIndex) -1].tag.push(this.formAddTags.controls.tag.value);
-  console.log(this.Students[Number( studentIndex) -1] );
+ 
   
 
   }

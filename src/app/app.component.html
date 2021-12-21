@@ -1,17 +1,17 @@
 <div class="scroll-bg">
   <div class="scroll-div">
     <div class="scroll-object">
-      <form class="form" [formGroup]="formSearchStudents"  (ngSubmit)="searchStudents()" autocomplete="off">
+      <form class="form" [formGroup]="formSearchStudents"  autocomplete="off">
         <input
           type="text"
-          name="filterStudent"
-          formControlName="studentsName"
+          
+          formControlName="firstName"
           
 
           placeholder="Search by name"
         />
       </form>
-      <form class="form" [formGroup]="formSearchTags"  (ngSubmit)="searchTag()">
+      <form class="form" [formGroup]="formSearchTags"  > <!--(ngSubmit)="searchTag()" -->
         <input
           type="text"
           name="filterTags"
@@ -41,7 +41,7 @@
                     
                     {{ Student.firstName | uppercase }}
                     {{ Student.lastName | uppercase }}
-                    {{Student.tag.length}}
+                  
                   </strong>
                 </h1>
                 <div class="cuerpo">

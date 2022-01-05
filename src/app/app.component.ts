@@ -41,14 +41,22 @@ export class AppComponent implements OnInit {
   formSearchStudents = this.FormBuilder.group({
     firstName: ['', [Validators.required]],
   });
+  filerSearch: any ={
+    firstName : ""
+  }
   //search students
   getStudent() {
+    
+    console.log(this.filerSearch.firstName = this.formSearchStudents.controls.firstName.value);
+    
+    this.filerSearch.firstName = this.formSearchStudents.controls.firstName.value;
+
     this.StudentService.GetStudents().subscribe((Students) => {
       const { students } = Students;
       students.forEach(student =>{
         student.tag =[]; 
       })
-
+      
       this.Students = students
       console.log(this.Students)
       this.getAverage();
@@ -60,7 +68,10 @@ export class AppComponent implements OnInit {
     this.StudentService.GetStudents().subscribe((Students)=>{
       const { students } = Students;
       console.log(students);
-      
+  // this.Students = students.filter((studentFilter) =>
+  // studentFilter.firstName
+  //   .toLowerCase()
+  //   .includes(this.filterStudent.toLowerCase())
       console.log(
        this.Students = this.formSearchStudents.controls.firstName.value.toLowerCase());
     })
